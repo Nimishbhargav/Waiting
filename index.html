@@ -1,98 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Live Total Waiting Time Calculator ❤️</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5a3c2, #ffd3e0);
-            color: #2d2d2d;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        h1 {
-            color: #c2185b;
-        }
-        .container {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 80%;
-            max-width: 500px;
-        }
-        .highlight {
-            color: #c2185b;
-            font-weight: 600;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #555;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waiting For Her 💔</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: radial-gradient(circle at top, #3a001e, #000000);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff0f5;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      text-shadow: 0 0 10px #ff7ba3, 0 0 25px #ff4f7a;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #ff7ba3, 0 0 20px #ff4f7a; }
+      to { text-shadow: 0 0 25px #ff4f7a, 0 0 45px #ff7ba3; }
+    }
+
+    .counter {
+      font-size: 1.2em;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px 25px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.2);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    /* Rain effect */
+    .rain {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .drop {
+      position: absolute;
+      width: 2px;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      bottom: 100%;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh);
+        opacity: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>💕 Live Total Waiting Calculator 💕</h1>
-        <p>Counting since <span class="highlight">August 17, 2025</span>.</p>
+  <h1>💔 I've been waiting for you since 17 August 2025 💔</h1>
+  <div class="counter" id="timer">Calculating...</div>
+  <div class="rain" id="rain"></div>
 
-        <h2>⏰ Elapsed Time ⏰</h2>
-        <p id="years"></p>
-        <p id="months"></p>
-        <p id="weeks"></p>
-        <p id="days"></p>
-        <p id="hours"></p>
-        <p id="minutes"></p>
-        <p id="seconds"></p>
+  <script>
+    function updateTimer() {
+      const startDate = new Date("2025-08-17T00:00:00");
+      const now = new Date();
+      const diff = now - startDate;
 
-        <h3 class="highlight" id="summary"></h3>
-    </div>
+      const totalDays = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const totalHours = Math.floor(diff / (1000 * 60 * 60));
+      const totalMinutes = Math.floor(diff / (1000 * 60));
+      const totalSeconds = totalDays * 86400 + Math.floor((diff % (1000 * 60 * 60 * 24)) / 1000);
 
-    <div class="footer">Made with ❤️ because love takes time.</div>
+      const years = Math.floor(totalDays / 365);
+      const months = Math.floor((totalDays % 365) / 30);
+      const weeks = Math.floor((totalDays % 30) / 7);
+      const days = totalDays;
 
-    <script>
-        function updateTimer() {
-            const startDate = new Date('2025-08-17T00:00:00');
-            const now = new Date();
-            const diff = now - startDate;
+      document.getElementById("timer").innerHTML = `
+        <b>${years}</b> Years  
+        <b>${months}</b> Months  
+        <b>${weeks}</b> Weeks  
+        <b>${days}</b> Days  
+        <b>${totalHours}</b> Hours  
+        <b>${totalMinutes}</b> Minutes  
+        <b>${totalSeconds}</b> Seconds
+      `;
+    }
 
-            const totalSeconds = Math.floor(diff / 1000);
-            const totalMinutes = Math.floor(totalSeconds / 60);
-            const totalHours = Math.floor(totalMinutes / 60);
-            const totalDays = Math.floor(totalHours / 24);
+    setInterval(updateTimer, 1000);
+    updateTimer();
 
-            // Calculate years, months, weeks, days precisely
-            const years = Math.floor(totalDays / 365);
-            const months = Math.floor((totalDays % 365) / 30);
-            const weeks = Math.floor(((totalDays % 365) % 30) / 7);
-            const days = ((totalDays % 365) % 30) % 7;
+    // Create rain animation
+    const rainContainer = document.getElementById("rain");
 
-            const hours = totalHours % 24;
-            const minutes = totalMinutes % 60;
-            const seconds = totalSeconds % 60;
+    function createDrop() {
+      const drop = document.createElement("div");
+      drop.classList.add("drop");
+      drop.style.left = Math.random() * 100 + "vw";
+      drop.style.animationDuration = 1 + Math.random() * 1.5 + "s";
+      rainContainer.appendChild(drop);
+      setTimeout(() => drop.remove(), 2000);
+    }
 
-            document.getElementById('years').innerText = `Years: ${years}`;
-            document.getElementById('months').innerText = `Months: ${months}`;
-            document.getElementById('weeks').innerText = `Weeks: ${weeks}`;
-            document.getElementById('days').innerText = `Days: ${days}`;
-            document.getElementById('hours').innerText = `Hours: ${hours}`;
-            document.getElementById('minutes').innerText = `Minutes: ${minutes}`;
-            document.getElementById('seconds').innerText = `Seconds: ${seconds}`;
-
-            document.getElementById('summary').innerText =
-                `You have been waiting for ${totalDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`;
-        }
-
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
+    setInterval(createDrop, 100);
+  </script>
 </body>
-      </html>
+</html>
