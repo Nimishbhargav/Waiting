@@ -1,96 +1,193 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Live Waiting Time Calculator ❤️</title>
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #f5a3c2, #ffd3e0);
-            color: #2d2d2d;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        h1 {
-            color: #c2185b;
-        }
-        .container {
-            background: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            width: 80%;
-            max-width: 500px;
-        }
-        .highlight {
-            color: #c2185b;
-            font-weight: 600;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #555;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Live Waiting Time Calculator ❤️</title>
+
+  <!-- Poppins font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-1: #f5a3c2;
+      --bg-2: #ffd3e0;
+      --accent: #c2185b;
+      --text: #2d2d2d;
+      --card-bg: #ffffff;
+      --shadow: rgba(0,0,0,0.1);
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .container {
+      background: var(--card-bg);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px var(--shadow);
+      padding: 30px;
+      width: 100%;
+      max-width: 520px;
+    }
+
+    h1 {
+      margin: 0 0 8px 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .highlight {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .time-grid {
+      margin: 18px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 12px;
+      justify-items: center;
+      align-items: center;
+    }
+
+    .time-item {
+      background: #fafafa;
+      border-radius: 8px;
+      padding: 10px 12px;
+      min-width: 120px;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.03);
+    }
+
+    .label {
+      font-size: 0.85rem;
+      color: #666;
+    }
+
+    .value {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-top: 4px;
+      color: var(--text);
+    }
+
+    #summary {
+      margin-top: 16px;
+      font-size: 0.95rem;
+      color: var(--accent);
+      font-weight: 600;
+      min-height: 1.2em;
+    }
+
+    footer {
+      margin-top: 18px;
+      font-size: 0.9rem;
+      color: #555;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>💕 Live Waiting Timer 💕</h1>
-        <p>Counting since <span class="highlight">August 17, 2025</span>.</p>
+  <main class="container" role="main">
+    <h1>💕 Live Waiting Timer 💕</h1>
+    <p>Counting since <time datetime="2025-08-17" class="highlight">August 17, 2025</time>.</p>
 
-        <h2>⏰ Time Elapsed ⏰</h2>
-        <p id="years"></p>
-        <p id="months"></p>
-        <p id="weeks"></p>
-        <p id="days"></p>
-        <p id="hours"></p>
-        <p id="minutes"></p>
-        <p id="seconds"></p>
+    <h2 class="sr-only" style="position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;">
+      Time Elapsed
+    </h2>
 
-        <h3 class="highlight" id="summary"></h3>
-    </div>
+    <section class="time-grid" aria-label="Elapsed time">
+      <div class="time-item" aria-live="polite">
+        <div class="label">Years</div>
+        <div id="years" class="value">0</div>
+      </div>
+      <div class="time-item" aria-live="polite">
+        <div class="label">Months</div>
+        <div id="months" class="value">0</div>
+      </div>
+      <div class="time-item" aria-live="polite">
+        <div class="label">Weeks</div>
+        <div id="weeks" class="value">0</div>
+      </div>
+      <div class="time-item" aria-live="polite">
+        <div class="label">Days</div>
+        <div id="days" class="value">0</div>
+      </div>
+      <div class="time-item" aria-live="polite">
+        <div class="label">Hours</div>
+        <div id="hours" class="value">0</div>
+      </div>
+      <div class="time-item" aria-live="polite">
+        <div class="label">Minutes</div>
+        <div id="minutes" class="value">0</div>
+      </div>
+      <div class="time-item" style="grid-column: 1 / -1;" aria-live="polite">
+        <div class="label">Seconds</div>
+        <div id="seconds" class="value">0</div>
+      </div>
+    </section>
 
-    <div class="footer">Made with ❤️ because love takes time.</div>
+    <div id="summary" aria-live="polite"></div>
+  </main>
 
-    <script>
-        function updateTimer() {
-            const startDate = new Date('2025-08-17T00:00:00');
-            const now = new Date();
-            const diff = now - startDate;
+  <footer>Made with ❤️ because love takes time.</footer>
 
-            const totalSeconds = Math.floor(diff / 1000);
-            const totalMinutes = Math.floor(totalSeconds / 60);
-            const totalHours = Math.floor(totalMinutes / 60);
-            const totalDays = Math.floor(totalHours / 24);
+  <script>
+    // Use an explicit UTC start date to avoid timezone shifts.
+    const startDateUTC = Date.UTC(2025, 7, 17, 0, 0, 0); // months are 0-indexed: 7 = August
 
-            const years = Math.floor(totalDays / 365);
-            const months = Math.floor((totalDays % 365) / 30);
-            const weeks = Math.floor(((totalDays % 365) % 30) / 7);
-            const days = ((totalDays % 365) % 30) % 7;
+    function plural(n, unit) {
+      return n + ' ' + unit + (Math.abs(n) === 1 ? '' : 's');
+    }
 
-            const hours = totalHours % 24;
-            const minutes = totalMinutes % 60;
-            const seconds = totalSeconds % 60;
+    function updateTimer() {
+      const now = Date.now();
+      let diffMs = now - startDateUTC;
+      if (diffMs < 0) diffMs = 0;
 
-            document.getElementById('years').innerHTML = 'Years: ' + years;
-            document.getElementById('months').innerHTML = 'Months: ' + months;
-            document.getElementById('weeks').innerHTML = 'Weeks: ' + weeks;
-            document.getElementById('days').innerHTML = 'Days: ' + days;
-            document.getElementById('hours').innerHTML = 'Hours: ' + hours;
-            document.getElementById('minutes').innerHTML = 'Minutes: ' + minutes;
-            document.getElementById('seconds').innerHTML = 'Seconds: ' + seconds;
+      const totalSeconds = Math.floor(diffMs / 1000);
+      const totalMinutes = Math.floor(totalSeconds / 60);
+      const totalHours = Math.floor(totalMinutes / 60);
+      const totalDays = Math.floor(totalHours / 24);
 
-            document.getElementById('summary').innerHTML =
-                `You have been waiting for ${totalDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds 💖`;
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
+      // Rough approximations (same approach as original)
+      const years = Math.floor(totalDays / 365);
+      const months = Math.floor((totalDays % 365) / 30);
+      const weeks = Math.floor(((totalDays % 365) % 30) / 7);
+      const days = ((totalDays % 365) % 30) % 7;
+
+      const hours = totalHours % 24;
+      const minutes = totalMinutes % 60;
+      const seconds = totalSeconds % 60;
+
+      // Update the UI using textContent to avoid HTML injection.
+      document.getElementById('years').textContent = years;
+      document.getElementById('months').textContent = months;
+      document.getElementById('weeks').textContent = weeks;
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+
+      const totalFullDays = totalDays;
+      document.getElementById('summary').textContent =
+        `You have been waiting for ${plural(totalFullDays, 'day')}, ${plural(hours, 'hour')}, ${plural(minutes, 'minute')}, and ${plural(seconds, 'second')} 💖`;
+    }
+
+    // Start immediately and update every second.
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  </script>
 </body>
-  </html>
+</html>
