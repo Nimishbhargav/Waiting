@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Live Waiting Time Calculator ❤️</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5a3c2, #ffd3e0);
+            color: #2d2d2d;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            color: #c2185b;
+        }
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 80%;
+            max-width: 500px;
+        }
+        .highlight {
+            color: #c2185b;
+            font-weight: 600;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💕 Live Waiting Timer 💕</h1>
+        <p>Counting since <span class="highlight">August 17, 2025</span>.</p>
+
+        <h2>⏰ Time Elapsed ⏰</h2>
+        <p id="years"></p>
+        <p id="months"></p>
+        <p id="weeks"></p>
+        <p id="days"></p>
+        <p id="hours"></p>
+        <p id="minutes"></p>
+        <p id="seconds"></p>
+
+        <h3 class="highlight" id="summary"></h3>
+    </div>
+
+    <div class="footer">Made with ❤️ because love takes time.</div>
+
+    <script>
+        function updateTimer() {
+            const startDate = new Date('2025-08-17T00:00:00');
+            const now = new Date();
+            const diff = now - startDate;
+
+            const totalSeconds = Math.floor(diff / 1000);
+            const totalMinutes = Math.floor(totalSeconds / 60);
+            const totalHours = Math.floor(totalMinutes / 60);
+            const totalDays = Math.floor(totalHours / 24);
+
+            const years = Math.floor(totalDays / 365);
+            const months = Math.floor((totalDays % 365) / 30);
+            const weeks = Math.floor(((totalDays % 365) % 30) / 7);
+            const days = ((totalDays % 365) % 30) % 7;
+
+            const hours = totalHours % 24;
+            const minutes = totalMinutes % 60;
+            const seconds = totalSeconds % 60;
+
+            document.getElementById('years').innerHTML = 'Years: ' + years;
+            document.getElementById('months').innerHTML = 'Months: ' + months;
+            document.getElementById('weeks').innerHTML = 'Weeks: ' + weeks;
+            document.getElementById('days').innerHTML = 'Days: ' + days;
+            document.getElementById('hours').innerHTML = 'Hours: ' + hours;
+            document.getElementById('minutes').innerHTML = 'Minutes: ' + minutes;
+            document.getElementById('seconds').innerHTML = 'Seconds: ' + seconds;
+
+            document.getElementById('summary').innerHTML =
+                `You have been waiting for ${totalDays} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds 💖`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+  </html>
