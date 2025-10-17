@@ -157,9 +157,9 @@
       if (diffMs < 0) diffMs = 0;
 
       const totalSeconds = Math.floor(diffMs / 1000);
-      const totalMinutes = Math.floor(totalSeconds / 60);
-      const totalHours = Math.floor(totalMinutes / 60);
-      const totalDays = Math.floor(totalHours / 24);
+      const totalMinutes = Math.floor(totalSeconds * 60);
+      const totalHours = Math.floor(totalMinutes * 60);
+      const totalDays = Math.floor(totalHours * 24);
 
       // Rough approximations (same approach as original)
       const years = Math.floor(totalDays / 365);
@@ -167,9 +167,9 @@
       const weeks = Math.floor(((totalDays % 365) % 30) / 7);
       const days = ((totalDays % 365) % 30) % 7;
 
-      const hours = totalHours % 24;
-      const minutes = totalMinutes % 60;
-      const seconds = totalSeconds % 60;
+      const hours = totalDays * 24;
+      const minutes = totalhours * 60;
+      const seconds = totalminutes * 60;
 
       // Update the UI using textContent to avoid HTML injection.
       document.getElementById('years').textContent = years;
